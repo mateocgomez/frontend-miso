@@ -1,0 +1,62 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-12 text-center mb-2 d-flex align-items-center justify-content-between">
+      <label class="fs-4 fw-bold" i18n>Álbum: {{album?.titulo}} ({{album?.anio}})</label>
+      <div>
+        <button *ngIf="album && album?.pertenece" type="button" class="btn btn-outline-success" (click)="goToEdit()" title="Editar álbum"><i class="bi bi-pencil-square"></i></button>
+        <button *ngIf="album && album?.pertenece" type="button" class="btn btn-outline-info px-1 ms-1" (click)="goToJoinCancion()" title="Agregar canción" ><i class="bi bi-plus" ></i><i class="bi bi-music-note"></i></button>
+        <button *ngIf="album && album?.pertenece" type="button" class="btn btn-outline-danger ms-1" (click)="eliminarAlbum()" title="Eliminar álbum"><i class="bi bi-trash-fill"></i></button>
+        <button *ngIf="album && album?.pertenece && album?.acceso?.llave == 'PRIVADO'" type="button" class="btn btn-outline-secondary ms-1" (click)="cambiarAccessoAlbum()" title="Compartir álbum"><i class="bi bi-share"></i></button>
+        <button *ngIf="album && album?.pertenece && album?.acceso?.llave == 'PUBLICO'" type="button" class="btn btn-outline-secondary ms-1" (click)="cambiarAccessoAlbum()" title="Privatizar álbum"><i class="bi bi-lock"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <p><span class="fw-bold" i18n>Medio: </span> <span class="text-capitalize">{{album?.medio?.llave}}</span></p>
+          <p>{{album?.descripcion}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <p class="fw-bold" i18n>Intérpretes:</p>
+          <ul class="mt-0">
+            <li class="my-1" *ngFor="let interprete of album?.interpretes">{{interprete}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3 mb-2 ms-2">
+      <h5 i18n>Canciones</h5>
+    </div>
+    <div class="col-12">
+      <table class="table table-hover table-bordered table-striped" >
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="text-center" i18n>Canción</th>
+            <th scope="col" class="text-center" i18n>Duración</th>
+            <th scope="col" class="text-center" i18n>Intérprete</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cancion of album?.canciones" >
+              <td >{{cancion.titulo}}</td>
+              <td class="text-center">{{cancion | formatTimeCancionPipe }}</td>
+              <td >{{cancion.interprete}}</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <app-album-comments *ngIf="album && album?.acceso?.llave == 'PUBLICO'" [album]="album"></app-album-comments>
+</div>
