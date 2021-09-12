@@ -144,18 +144,18 @@ export class AlbumListComponent implements OnInit {
   }
 
   showError(error: string){
-    this.toastr.error(error, "Error de autenticación")
+    this.toastr.error(error, $localize`Error de autenticación`)
   }
 
   showWarning(warning: string){
-    this.toastr.warning(warning, "Error de autenticación")
+    this.toastr.warning(warning, $localize`Error de autenticación`)
   }
 
   showSuccess() {
-    this.toastr.success(`El album fue eliminado`, "Eliminado exitosamente");
+    this.toastr.success($localize`El album fue eliminado`, $localize`Eliminado exitosamente`);
   }
 
   showStatusChangedSuccess(status: string) {
-    this.toastr.success(`Album marcado como ${status}`, "Modificado exitosamente");
+    this.toastr.success($localize`Album marcado como ${status}`, $localize`Modificado exitosamente`);
   }
 }

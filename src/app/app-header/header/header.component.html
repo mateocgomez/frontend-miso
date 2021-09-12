@@ -1,17 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarTogglerDemo01"
-      aria-controls="navbarTogglerDemo01"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" >
       <div class="d-flex align-items-center justify-content-between w-100">
         <div class="d-flex align-items-center">
           <div class="ionic-header-container-logo">
@@ -22,7 +11,7 @@
               (click)="goTo('./album')"
             />
           </div>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link cursor-pointer" (click)="goTo('album')" i18n
                 >Álbumes</a
@@ -38,7 +27,7 @@
                 >Acerca de</a
               >
             </li>
-          </ul>
+          </ul> -->
         </div>
 
         <div class="d-flex flex-row-reverse align-items-center">
@@ -49,8 +38,7 @@
             >Salir</a
           >
           <ng-container *ngFor="let language of languageList">
-            <a class="m-2" (click)="switchLanguage(language.code)"
-              ><button class="button">{{ language.label }}</button></a
+            <a class="m-2" (click)="switchLanguage(language.code)"><button class="button">{{ language.label }}</button></a
             >
           </ng-container>
         </div>

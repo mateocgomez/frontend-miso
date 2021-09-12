@@ -23,13 +23,13 @@
           <h1 class="text-center" i18n>Ingreso</h1>
         </div>
         <div *ngIf="error">
-          <div class="alert alert-danger" role="alert">
+          <div class="alert alert-danger" role="alert" i18n>
             Usuario o contraseña incorrectos
           </div>
         </div>
         <div class="mb-3 row">
           <label for="staticEmail" class="col-lg-3 col-form-label"
-            >Usuario</label
+          i18n>Usuario</label
           >
           <div class="col-lg-9">
             <input
@@ -42,7 +42,7 @@
         </div>
         <div class="mb-3 row">
           <label for="inputPassword" class="col-lg-3 col-form-label"
-            >Contraseña</label
+          i18n>Contraseña</label
           >
           <div class="col-lg-9">
             <input
@@ -58,12 +58,12 @@
             (click)="onLogInUsuario(usuario.value, contrasena.value)"
             type="button"
             class="btn btn-primary col-8"
-          >
+            i18n>
             Ingresar
           </button>
         </div>
         <div class="col-12 text-center mt-2">
-          <p i18n>¿No tienes cuenta? <a href="/signup">Registrate</a></p>
+          <p i18n>¿No tienes cuenta? <a href="./signup">Registrate</a></p>
         </div>
       </div>
     </div>

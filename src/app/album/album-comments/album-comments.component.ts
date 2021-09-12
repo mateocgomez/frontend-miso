@@ -61,11 +61,11 @@ export class AlbumCommentsComponent implements OnInit {
   }
 
   showError(error: string){
-    this.toastr.error(error, "Error de autenticación")
+    this.toastr.error(error, $localize`Error de autenticación`)
   }
 
   showWarning(warning: string){
-    this.toastr.warning(warning, "Error de autenticación")
+    this.toastr.warning(warning, $localize`Error de autenticación`)
   }
 
   showSuccess() {

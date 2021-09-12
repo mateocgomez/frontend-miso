@@ -2,18 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css'],
 })
-export class HeaderComponent implements OnInit {
-  languageList = [
-    { code: 'en', label: 'English' },
-    { code: 'es', label: 'Espanol' },
-  ];
+export class SidebarComponent implements OnInit {
 
   constructor(private routerPath: Router, private router: ActivatedRoute) {}
-
   ngOnInit(): void {}
 
   goTo(menu: string) {
@@ -37,11 +32,5 @@ export class HeaderComponent implements OnInit {
       default:
         this.routerPath.navigate([menu]);
     }
-  }
-
-  switchLanguage(languageCode: string) {
-    const url = `/${languageCode}${this.routerPath.url}`
-    console.log(url)
-    location.href = url
   }
 }

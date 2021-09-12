@@ -11,10 +11,11 @@ import { AlbumModule } from './album/album.module';
 import { AcercaModule } from './acerca/acerca.module';
 import { AppHeaderModule } from './app-header/app-header.module';
 import { CancionModule } from './cancion/cancion.module';
+import { SideBarModule } from './app-sidebar/app-sidebar.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,8 @@ import { CancionModule } from './cancion/cancion.module';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SideBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
