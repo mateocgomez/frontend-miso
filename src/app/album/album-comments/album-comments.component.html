@@ -3,21 +3,24 @@
         <h5 i18n>Comentarios</h5>
     </div>
 
-    <div class="d-flex flex-column comment-section card py-2 mb-2">
+    <div *ngFor="let comentario of album?.comentarios" class="d-flex flex-column comment-section card py-2 mb-2">
         <div class="bg-white p-2">
             <div class="d-flex flex-row user-info"><img class="rounded-circle" src="./assets/images/user_2.png" width="40">
-                <div class="d-flex flex-column justify-content-start ms-2"><span class="d-block font-weight-bold name">Marry Andrews</span><span class="date text-black-50">15 Enero 2020</span></div>
+                <div class="d-flex flex-column justify-content-start ms-2"><span class="d-block font-weight-bold name">{{comentario?.usuario}}</span><span class="date text-black-50">{{comentario?.created_at | date :'short'}}</span></div>
             </div>
             <div class="mt-2">
-                <p class="comment-text m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua 😌. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi (🇨🇴) ut aliquip ex ea commodo consequat. 👏🏼 👏🏼</p>
+                <p class="comment-text m-0">{{comentario?.texto}}</p>
             </div>
         </div>
     </div>
     
     <form action="" class="p-0" [formGroup]="albumCommentForm" (ngSubmit)="createComentarioAlbum(albumCommentForm.value)">
+        <div class="alert alert-danger my-3" *ngIf="albumCommentForm.get('texto')?.hasError('required') && albumCommentForm.get('texto')?.touched" i18n>
+            No puede hacer un comentario en blanco.
+        </div>
         <textarea class="w-100 px-2 form-control shadow-none textarea mb-2" formControlName="texto" id="" rows="3" maxlength="128" i18n-placeholder placeholder="Agrega un comentario"></textarea>
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary" i18n>Comentar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!albumCommentForm.valid" i18n>Comentar</button>
         </div>
     </form>
 </div>

@@ -4,6 +4,8 @@ export class Cancion {
     minutos: number;
     segundos: number;
     interprete: string;
+    acceso: Acceso;
+    pertenece: boolean;
     albumes: Array<any>
 
     constructor(
@@ -12,6 +14,8 @@ export class Cancion {
         minutos: number,
         segundos: number,
         interprete: string,
+        acceso: Acceso,
+        pertenece: boolean,
         albumes: Array<any>
     ){
         this.id = id,
@@ -19,6 +23,21 @@ export class Cancion {
         this.minutos = minutos,
         this.segundos = segundos,
         this.interprete = interprete
+        this.acceso = acceso,
+        this.pertenece = pertenece,
         this.albumes = albumes
+    }
+}
+
+export class Acceso{
+    llave: string;
+    valor: number
+
+    constructor(
+        llave: string,
+        valor:number
+    ){
+        this.llave = llave,
+        this.valor = valor
     }
 }

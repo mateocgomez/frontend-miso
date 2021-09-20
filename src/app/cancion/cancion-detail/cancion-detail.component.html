@@ -2,10 +2,12 @@
 
   <div class="row">
     <div class="col-12 text-center mb-2 d-flex align-items-center justify-content-between">
+      <label class="fs-4 fw-bold" i18n>Canción: {{cancion?.titulo}}</label>
       <div>
-        <label class="fs-4 fw-bold" i18n>Canción: {{cancion?.titulo}}</label>
-        <button *ngIf="cancion" type="button" class="btn btn-outline-success ms-3 me-2" (click)="goToEdit()" i18n-title title="Editar canción"><i class="bi bi-pencil-square"></i></button>
-        <button *ngIf="cancion" type="button" class="btn btn-outline-danger me-1" (click)="eliminarCancion()" i18n-title title="Eliminar canción"><i class="bi bi-trash-fill"></i></button>
+        <button *ngIf="cancion && cancion?.pertenece" type="button" class="btn btn-outline-success" (click)="goToEdit()" i18n-title title="Editar canción"><i class="bi bi-pencil-square"></i></button>
+        <button *ngIf="cancion && cancion?.pertenece" type="button" class="btn btn-outline-danger ms-1" (click)="eliminarCancion()" i18n-title title="Eliminar canción"><i class="bi bi-trash-fill"></i></button>
+        <button *ngIf="cancion && cancion?.pertenece && cancion?.acceso?.llave == 'PRIVADO'" type="button" (click)="cambiarAccesoCancion()" class="btn btn-outline-secondary ms-1" title="Compartir álbum"><i class="bi bi-share"></i></button>
+        <button *ngIf="cancion && cancion?.pertenece && cancion?.acceso?.llave == 'PUBLICO'" type="button" (click)="cambiarAccesoCancion()" class="btn btn-outline-secondary ms-1" title="Privatizar álbum"><i class="bi bi-lock"></i></button>
       </div>
     </div>
   </div>

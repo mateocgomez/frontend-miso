@@ -10,6 +10,7 @@ export class Album {
     usuario: number;
     interpretes: Array<string>;
     canciones: Array<Cancion>
+    comentarios: Array<ComentarioAlbum>
 
     constructor(
         id: number,
@@ -21,7 +22,8 @@ export class Album {
         pertenece: boolean,
         usuario: number,
         interpretes: Array<string>,
-        canciones: Array<Cancion>
+        canciones: Array<Cancion>,
+        comentarios: Array<ComentarioAlbum>
     ){
         this.id = id,
         this.titulo = titulo,
@@ -33,6 +35,7 @@ export class Album {
         this.usuario = usuario,
         this.interpretes = interpretes,
         this.canciones = canciones
+        this.comentarios = comentarios
     }
 }
 
@@ -68,19 +71,25 @@ export class Cancion{
     minutos: number;
     segundos: number;
     interprete: string;
+    acceso: Acceso;
+    pertenece: boolean;
 
     constructor(
         id: number,
         titulo: string,
         minutos: number,
         segundos: number,
-        interprete: string
+        interprete: string,
+        acceso: Acceso,
+        pertenece: boolean
     ){
         this.id = id,
         this.titulo = titulo,
         this.minutos = minutos,
         this.segundos = segundos,
-        this.interprete = interprete
+        this.interprete = interprete,
+        this.acceso = acceso,
+        this.pertenece = pertenece
     }
 }
 
@@ -88,14 +97,14 @@ export class ComentarioAlbum{
     id: number;
     texto: string;
     created_at: Date;
-    usuario: number;
+    usuario: string;
     albumes: Array<Album>
 
     constructor(
         id: number,
         texto: string,
         created_at: Date,
-        usuario: number,
+        usuario: string,
         albumes:  Array<Album>,
     ){
         this.id = id,

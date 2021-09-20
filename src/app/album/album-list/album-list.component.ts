@@ -72,6 +72,16 @@ export class AlbumListComponent implements OnInit {
     error =>{
       this.showError("Ha ocurrido un error, " + error.message)
     })
+    
+    if(this.albumSeleccionado.acceso.llave == "PUBLICO"){
+      this.albumService.obtenerComentariosAlbum(this.token, a.id)
+      .subscribe(comentarios => {
+        this.albumSeleccionado.comentarios = comentarios
+      },
+      error =>{
+        this.showError("Ha ocurrido un error, " + error.message)
+      })
+    }
   }
 
   getInterpretes(canciones: Array<Cancion>): Array<string>{
@@ -118,16 +128,17 @@ export class AlbumListComponent implements OnInit {
     this.ngOnInit()
   }
 
-  cambiarAccessoAlbum(){
+  cambiarAccesoAlbum(){
     let status = 'PRIVADO'
     if(this.albumSeleccionado.acceso.llave == 'PRIVADO' ) {
       status = "PUBLICO"
     }
 
-    this.albumService.cambiarAccessoAlbum(status, this.userId, this.token, this.albumSeleccionado.id)
+    this.albumService.cambiarAccesoAlbum(status, this.userId, this.token, this.albumSeleccionado.id)
     .subscribe(album => {
-      this.ngOnInit();
       this.showStatusChangedSuccess(status);
+      this.albumSeleccionado.acceso.llave = status
+      this.onSelect(this.albumSeleccionado, this.indiceSeleccionado)
     },
     error=> {
       if(error.statusText === "UNAUTHORIZED"){
@@ -140,7 +151,6 @@ export class AlbumListComponent implements OnInit {
         this.showError("Ha ocurrido un error. " + error.message)
       }
     })
-    this.ngOnInit()
   }
 
   showError(error: string){

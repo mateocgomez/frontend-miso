@@ -11,6 +11,7 @@ export class CancionDetailComponent implements OnInit {
 
   @Input() cancion: Cancion;
   @Output() deleteCancion = new EventEmitter();
+  @Output() changeSongAccess = new EventEmitter();
 
   userId: number;
   token: string;
@@ -34,4 +35,7 @@ export class CancionDetailComponent implements OnInit {
     this.routerPath.navigate([`/canciones/edit/${this.cancion.id}/${this.userId}/${this.token}`])
   }
 
+  cambiarAccesoCancion(){
+    this.changeSongAccess.emit(this.cancion.id)
+  }
 }

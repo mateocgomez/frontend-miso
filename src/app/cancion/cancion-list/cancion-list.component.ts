@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cancion } from '../cancion';
+import { Acceso, Cancion } from '../cancion';
 import { CancionService } from '../cancion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -79,6 +79,31 @@ export class CancionListComponent implements OnInit {
     })
   }
 
+  cambiarAccesoCancion(){
+    let status = 'PRIVADO'
+    if(this.cancionSeleccionada.acceso.llave == 'PRIVADO' ) {
+      status = "PUBLICO"
+    }
+
+    this.cancionService.cambiarAccesoCancion(status, this.cancionSeleccionada.id, this.token)
+    .subscribe(album => {
+      this.ngOnInit();
+      this.showStatusChangedSuccess(status);
+    },
+    error=> {
+      if(error.statusText === "UNAUTHORIZED"){
+        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+      }
+      else if(error.statusText === "UNPROCESSABLE ENTITY"){
+        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      }
+      else{
+        this.showError("Ha ocurrido un error. " + error.message)
+      }
+    })
+    this.ngOnInit()
+  }
+
   irCrearCancion(){
     this.routerPath.navigate([`/canciones/create/${this.userId}/${this.token}`])
   }
@@ -91,4 +116,11 @@ export class CancionListComponent implements OnInit {
     this.toastr.success($localize`La canción fue eliminada`, $localize`Eliminada exitosamente`);
   }
 
+  showWarning(warning: string){
+    this.toastr.warning(warning, "Error de autenticación")
+  }
+
+  showStatusChangedSuccess(status: string) {
+    this.toastr.success(`Canción marcada como ${status}`, "Modificado exitosamente");
+  }
 }

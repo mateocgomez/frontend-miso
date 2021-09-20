@@ -38,7 +38,7 @@ export class AlbumDetailComponent implements OnInit {
     this.deleteAlbum.emit(this.album.id)
   }
 
-  cambiarAccessoAlbum(){
+  cambiarAccesoAlbum(){
     this.changeAlbumAccess.emit(this.album.id)
   }
 }

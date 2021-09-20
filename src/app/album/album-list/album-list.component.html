@@ -45,9 +45,9 @@
                 (click)="onSelect(album, i)"
                 [ngClass]="{ selected: i === indiceSeleccionado }"
               >
+                <td><i class="bi" [ngClass]="{'bi-people': album?.acceso?.llave === 'PUBLICO' }"></i></td>
                 <td>{{ album.titulo }}</td>
-                <td>{{ album.anio }}</td>
-                <td>{{ album.acceso?.llave }}</td>
+                <td>{{ album.anio }}</td> 
               </tr>
             </tbody>
           </table>
@@ -55,11 +55,7 @@
       </div>
     </div>
     <div class="col-md-7 col-xs-12">
-      <app-album-detail
-        (deleteAlbum)="eliminarAlbum()"
-        (changeAlbumAccess)="cambiarAccessoAlbum()"
-        [album]="albumSeleccionado"
-      ></app-album-detail>
+      <app-album-detail (deleteAlbum)="eliminarAlbum()" (changeAlbumAccess)="cambiarAccesoAlbum()" [album]="albumSeleccionado"></app-album-detail>
     </div>
   </div>
 </div>

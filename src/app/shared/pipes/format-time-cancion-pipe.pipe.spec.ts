@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Cancion } from 'src/app/album/album';
+import { Acceso, Cancion } from 'src/app/album/album';
 import { FormatTimeCancionPipePipe } from './format-time-cancion-pipe.pipe';
 
 describe('FormatTimeCancionPipePipe', () => {
@@ -10,7 +10,8 @@ describe('FormatTimeCancionPipePipe', () => {
   });
 
   it('transforms "4:9" to "04:09"', () => {
-    const cancion: Cancion = new Cancion(1, 'test', 4, 9, 'test');
+    const acceso = new Acceso("PRIVADO", 2)
+    const cancion: Cancion = new Cancion(1, 'test', 4, 9, 'test', acceso, true);
     expect(pipe.transform(cancion)).toBe('04:09');
   });
 });

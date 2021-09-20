@@ -9,7 +9,7 @@ import { Cancion } from '../cancion/cancion';
 })
 export class AlbumService {
 
-  private backUrl: string = "https://ionic-backend-grupo02.herokuapp.com"
+  private backUrl: string = "http://localhost:5000"
 
   constructor(private http: HttpClient) { }
 
@@ -52,7 +52,7 @@ export class AlbumService {
     return this.http.delete<Album>(`${this.backUrl}/album/${albumId}`, {headers: headers})
   }
 
-  cambiarAccessoAlbum(status: string, idUsuario: number, token: string, albumId: number): Observable<Album>{
+  cambiarAccesoAlbum(status: string, idUsuario: number, token: string, albumId: number): Observable<Album>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`       
     })
@@ -72,12 +72,16 @@ export class AlbumService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`       
     })
-
-    // const comentario = {
-    //   "texto": content
-    // }
     
     return this.http.post<ComentarioAlbum>(`${this.backUrl}/album/${albumId}/comentarios`, comentario, {headers: headers})
+  }
+
+  obtenerComentariosAlbum(token: string, albumId: number): Observable<ComentarioAlbum[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`       
+    })
+    
+    return this.http.get<ComentarioAlbum[]>(`${this.backUrl}/album/${albumId}/comentarios`, {headers: headers})
   }
 
 }

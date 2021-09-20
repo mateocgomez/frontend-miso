@@ -33,6 +33,13 @@ export class AlbumCommentsComponent implements OnInit {
     this.albumCommentForm = this.formBuilder.group({
       texto: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
     })
+
+    if(this.album) {
+      this.albumService.obtenerComentariosAlbum(this.token, this.album.id)
+      .subscribe(comments => {
+        this.album.comentarios = comments
+      })
+    }
   }
 
   randomizeUserImage(){
@@ -40,12 +47,12 @@ export class AlbumCommentsComponent implements OnInit {
   }
 
   createComentarioAlbum(newComment: ComentarioAlbum){
-    newComment.usuario = this.userId
+    newComment.usuario = this.userId.toString()
     this.albumService.crearComentarioAlbum(newComment, this.token, this.album.id)
     .subscribe(album => {
       this.showSuccess()
       this.albumCommentForm.reset()
-      this.routerPath.navigate([`/albumes/${this.userId}/${this.token}`])
+      this.ngOnInit();
     },
     error=> {
       if(error.statusText === "UNAUTHORIZED"){
