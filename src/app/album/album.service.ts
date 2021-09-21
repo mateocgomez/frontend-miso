@@ -9,27 +9,27 @@ import { Cancion } from '../cancion/cancion';
 })
 export class AlbumService {
 
-  private backUrl: string = "http://localhost:5000"
+  private backUrl: string = "https://ionic-backend-grupo02.herokuapp.com"
 
   constructor(private http: HttpClient) { }
 
   getAlbumes(usuario: number, token: string): Observable<Album[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.get<Album[]>(`${this.backUrl}/usuario/${usuario}/albumes`, {headers: headers})
   }
 
   getCancionesAlbum(idAlbum: number, token: string): Observable<Cancion[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.get<Cancion[]>(`${this.backUrl}/album/${idAlbum}/canciones`, {headers: headers})
   }
 
   crearAlbum(idUsuario: number, token: string, album: Album):Observable<Album>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.post<Album>(`${this.backUrl}/usuario/${idUsuario}/albumes`, album, {headers: headers})
   }
@@ -40,27 +40,27 @@ export class AlbumService {
 
   editarAlbum(idUsuario: number, token: string, albumId: number, album: Album): Observable<Album>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.put<Album>(`${this.backUrl}/album/${albumId}`, album, {headers: headers})
   }
 
   eliminarAlbum(idUsuario: number, token: string, albumId: number): Observable<Album>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.delete<Album>(`${this.backUrl}/album/${albumId}`, {headers: headers})
   }
 
   cambiarAccesoAlbum(status: string, idUsuario: number, token: string, albumId: number): Observable<Album>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
 
     const params = {
       "acceso": status
     }
-    
+
     return this.http.patch<Album>(`${this.backUrl}/album/${albumId}`, params, {headers: headers})
   }
 
@@ -70,17 +70,17 @@ export class AlbumService {
 
   crearComentarioAlbum(comentario: ComentarioAlbum, token: string, albumId: number): Observable<ComentarioAlbum>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
-    
+
     return this.http.post<ComentarioAlbum>(`${this.backUrl}/album/${albumId}/comentarios`, comentario, {headers: headers})
   }
 
   obtenerComentariosAlbum(token: string, albumId: number): Observable<ComentarioAlbum[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
-    
+
     return this.http.get<ComentarioAlbum[]>(`${this.backUrl}/album/${albumId}/comentarios`, {headers: headers})
   }
 

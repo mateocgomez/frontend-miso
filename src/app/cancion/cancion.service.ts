@@ -9,13 +9,13 @@ import { Album } from '../album/album';
 })
 export class CancionService {
 
-  private backUrl: string = "http://localhost:5000"
+  private backUrl: string = "https://ionic-backend-grupo02.herokuapp.com"
 
   constructor(private http: HttpClient) { }
 
   getCancionesAlbum(idAlbum: number, token: string): Observable<Cancion[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.get<Cancion[]>(`${this.backUrl}/album/${idAlbum}/canciones`, {headers: headers})
   }
@@ -46,13 +46,13 @@ export class CancionService {
 
   cambiarAccesoCancion(status: string, cancionId: number, token: string): Observable<Album>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
 
     const params = {
       "acceso": status
     }
-    
+
     return this.http.patch<Album>(`${this.backUrl}/cancion/${cancionId}`, params, {headers: headers})
   }
 
