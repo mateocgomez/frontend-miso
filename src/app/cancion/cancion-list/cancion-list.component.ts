@@ -37,7 +37,7 @@ export class CancionListComponent implements OnInit {
   }
 
   getCanciones():void{
-    this.cancionService.getCanciones()
+    this.cancionService.getCanciones(this.token)
     .subscribe(canciones => {
       this.canciones = canciones
       this.mostrarCanciones = canciones

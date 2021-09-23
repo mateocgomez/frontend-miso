@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Cancion } from './cancion';
+import { Cancion, ComentarioCancion } from './cancion';
 import { Album } from '../album/album';
 
 @Injectable({
@@ -20,16 +20,22 @@ export class CancionService {
     return this.http.get<Cancion[]>(`${this.backUrl}/album/${idAlbum}/canciones`, {headers: headers})
   }
 
-  getCanciones(): Observable<Cancion[]>{
-    return this.http.get<Cancion[]>(`${this.backUrl}/canciones`)
+  getCanciones(token: string): Observable<Cancion[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<Cancion[]>(`${this.backUrl}/canciones`, {headers: headers})
   }
 
   getAlbumesCancion(cancionId: number): Observable<Album[]>{
     return this.http.get<Album[]>(`${this.backUrl}/cancion/${cancionId}/albumes`)
   }
 
-  crearCancion(cancion: Cancion):Observable<Cancion>{
-    return this.http.post<Cancion>(`${this.backUrl}/canciones`, cancion)
+  crearCancion(cancion: Cancion, token: string):Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.post<Cancion>(`${this.backUrl}/canciones`, cancion, {headers: headers})
   }
 
   getCancion(cancionId: number): Observable<Cancion>{
@@ -54,6 +60,22 @@ export class CancionService {
     }
 
     return this.http.patch<Album>(`${this.backUrl}/cancion/${cancionId}`, params, {headers: headers})
+  }
+
+  crearComentarioCancion(comentario: ComentarioCancion, token: string, cancionId: number): Observable<ComentarioCancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this.http.post<ComentarioCancion>(`${this.backUrl}/cancion/${cancionId}/comentarios`, comentario, {headers: headers})
+  }
+
+  obtenerComentariosCancion(token: string, cancionId: number): Observable<ComentarioCancion[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+
+    return this.http.get<ComentarioCancion[]>(`${this.backUrl}/cancion/${cancionId}/comentarios`, {headers: headers})
   }
 
 }
