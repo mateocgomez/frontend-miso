@@ -9,7 +9,7 @@ import { Cancion } from '../cancion/cancion';
 })
 export class AlbumService {
 
-  private backUrl: string = "https://cors-anywhere.herokuapp.com/https://app-sqlachemy.herokuapp.com"
+  private backUrl: string = "https://app-sqlachemy.herokuapp.com"
 
   constructor(private http: HttpClient) { }
 
