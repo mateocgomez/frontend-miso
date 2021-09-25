@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AlbumService } from '../album.service';
 import { Album, Medio } from '../album';
+import { showSuccess } from 'src/app/shared/pipes/showSuccess/showSuccess.pipe';
+import { showWarning } from 'src/app/shared/pipes/showWarning/showWarning.pipe';
+import { showError } from 'src/app/shared/pipes/showError/showError.pipe';
 
 @Component({
   selector: 'app-album-create',
@@ -36,13 +39,16 @@ export class AlbumCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: ActivatedRoute,
     private toastr: ToastrService,
-    private routerPath: Router
+    private routerPath: Router,
+    private success: showSuccess,
+    private warning: showWarning,
+    private error: showError,
     ) { }
 
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
-      this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      this.error.transform("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
     }
     else{
       this.userId = parseInt(this.router.snapshot.params.userId)
@@ -56,18 +62,6 @@ export class AlbumCreateComponent implements OnInit {
     }
   }
 
-  showError(error: string){
-    this.toastr.error(error, "Error")
-  }
-
-  showWarning(warning: string){
-    this.toastr.warning(warning, $localize`Error de autenticación`)
-  }
-
-  showSuccess(album: Album) {
-    this.toastr.success($localize`El album ${album.titulo} fue creado`, $localize`Creación exitosa`);
-  }
-
   cancelCreate(){
     this.albumForm.reset()
     this.routerPath.navigate([`/albumes/${this.userId}/${this.token}`])
@@ -77,19 +71,19 @@ export class AlbumCreateComponent implements OnInit {
     this.albumForm.get('anio')?.setValue(parseInt(this.albumForm.get('anio')?.value))
     this.albumService.crearAlbum(this.userId, this.token, newAlbum)
     .subscribe(album => {
-      this.showSuccess(album)
+      this.success.transform(`El album ${album.titulo} fue creado`, 'Creado correctamente')
       this.albumForm.reset()
       this.routerPath.navigate([`/albumes/${this.userId}/${this.token}`])
     },
     error=> {
       if(error.statusText === "UNAUTHORIZED"){
-        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+        this.warning.transform("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
       }
       else if(error.statusText === "UNPROCESSABLE ENTITY"){
-        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+        this.error.transform("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
       }
       else{
-        this.showError("Ha ocurrido un error. " + error.message)
+        this.error.transform(`Ha ocurrido un error. ${error.message}`)
       }
     })
   }

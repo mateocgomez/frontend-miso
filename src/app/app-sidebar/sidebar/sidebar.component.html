@@ -2,13 +2,13 @@
   <h2>Menu</h2>
   <hr />
   <div class="btn-group-vertical col-md-12 col-sm-12 col-xs-12 mb-2 sidebar-btn">
-    <button class="btn btn-outline-info" (click)="goTo('album')" i18n>
+    <button class="btn btn-outline-info" [ngClass]="{'active': currentPath === 'albumes' }" (click)="goTo('album')" i18n>
       Albumes
     </button>
-    <button class="btn btn-outline-info" (click)="goTo('cancion')" i18n>
+    <button class="btn btn-outline-info" [ngClass]="{'active': currentPath === 'canciones' }" (click)="goTo('cancion')" i18n>
       Canciones
     </button>
-    <button class="btn btn-outline-info" (click)="goTo('acerca')" i18n>
+    <button class="btn btn-outline-info" [ngClass]="{'active': currentPath === 'acerca_de' }" (click)="goTo('acerca')" i18n>
       Acerca de
     </button>
   </div>
