@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { Album, Medio } from '../album';
 import { AlbumService } from '../album.service';
+import { showSuccess } from '../../shared/pipes/showSuccess/showSuccess.pipe';
+import { stateError } from '../../shared/pipes/stateError/stateError.pipe';
+import { showError } from '../../shared/pipes/showError/showError.pipe';
 
 @Component({
   selector: 'app-album-edit',
@@ -36,12 +38,16 @@ export class AlbumEditComponent implements OnInit {
     private albumService: AlbumService,
     private formBuilder: FormBuilder,
     private router: ActivatedRoute,
-    private toastr: ToastrService,
-    private routerPath: Router) { }
+    private routerPath: Router,
+    private success: showSuccess,
+    private errorState: stateError,
+    private error: showError,
+
+    ) { }
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
-      this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      this.error.transform("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
     }
     else{
       this.albumService.getAlbum(parseInt(this.router.snapshot.params.albumId))
@@ -69,34 +75,11 @@ export class AlbumEditComponent implements OnInit {
     this.albumForm.get('anio')?.setValue(parseInt(this.albumForm.get('anio')?.value))
     this.albumService.editarAlbum(this.userId, this.token, this.albumId, newAlbum)
     .subscribe(album => {
-      this.showSuccess(album)
+      this.success.transform($localize`El album ${album.titulo} fue editado`, $localize`Edición exitosa`)
       this.albumForm.reset()
       this.routerPath.navigate([`/albumes/${this.userId}/${this.token}`])
     },
-    error=> {
-      if(error.statusText === "UNAUTHORIZED"){
-        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
-      }
-      else if(error.statusText === "UNPROCESSABLE ENTITY"){
-        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
-      }
-      else{
-        this.showError("Ha ocurrido un error. " + error.message)
-      }
-    })
-  }
-
-
-  showError(error: string){
-    this.toastr.error(error, "Error")
-  }
-
-  showWarning(warning: string){
-    this.toastr.warning(warning, $localize`Error de autenticación`)
-  }
-
-  showSuccess(album: Album) {
-    this.toastr.success($localize`El album ${album.titulo} fue editado`, $localize`Edición exitosa`);
+    error=> this.errorState.transform(error));
   }
 
 }

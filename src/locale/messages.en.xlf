@@ -732,7 +732,7 @@
       </trans-unit>
       <trans-unit id="4463580324870306377" datatype="html">
         <source> Albumes </source>
-        <target> Albumes </target>
+        <target> Albums </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app-sidebar/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">6,7</context>
